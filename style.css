@@ -1323,3 +1323,29 @@ footer > div {
   font-size: 11px;
   fill: var(--muted);
 }
+
+/* Etapas francesas com altura determinada pelo conteúdo. */
+#panorama .steps {
+  display: grid;
+  gap: 24px;
+}
+#panorama .steps article {
+  min-height: 0;
+  padding: 0;
+  justify-content: start;
+}
+#panorama .steps .source,
+#panorama .history-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+#history-source {
+  grid-column: 1 / -1;
+}
+@media (max-width: 650px) {
+  #panorama .sticky-plot {
+    position: static;
+    margin-bottom: 24px;
+  }
+}

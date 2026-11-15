@@ -38,3 +38,6 @@ with open('data/estatisticas.csv','w',encoding='utf-8-sig',newline='') as f:
  for series in d['brazil']['religionHistory']:
   for y,v in series['data']:
    w.writerow(['Brasil',series['name']+' — série histórica censitária',y,str(v).replace('.',','),'% de pessoas de 10 anos ou mais' if y==2022 else '% da população de todas as idades','IBGE · Censos 1872–2022'])
+
+ r=d['franceRecent']
+ w.writerow(['França','Missa — '+r['frequency'],r['year'],str(r['value']).replace('.',','),r['unit'],d['sources'][r['source']]['label']])

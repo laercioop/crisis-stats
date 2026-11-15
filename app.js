@@ -286,18 +286,20 @@ function render() {
     "",
     "",
     `
-  <div class="scrolly"><div class="sticky-plot"><h3 class="chart-title">França · missa aos domingos</h3><p class="unit">% dos franceses pesquisados</p><div class="dot-readout"><strong id="history-value">27%</strong><span id="history-year">1952</span></div><div class="dotgrid" id="history-dots" role="img" aria-label="27% em 1952">${Array.from({ length: 100 }, () => '<i class="dot" aria-hidden="true"></i>').join("")}</div><div id="history-legend">${legend(
+  <div class="scrolly"><div class="sticky-plot"><h3 class="chart-title">França · missa aos domingos</h3><p class="unit" id="history-unit">% dos franceses pesquisados</p><div class="dot-readout"><strong id="history-value">27%</strong><span id="history-year">1952</span></div><div class="dotgrid" id="history-dots" role="img" aria-label="27% em 1952">${Array.from({ length: 100 }, () => '<i class="dot" aria-hidden="true"></i>').join("")}</div><div id="history-legend">${legend(
     [
       { name: "Missa aos domingos", color: colors[0] },
       { name: "Demais respostas", color: "#d4d5ca" },
     ],
-  )}</div><div class="toggle-row" aria-label="Ano da pesquisa">${[1952, 1966, 2006].map((y, i) => `<button data-history="${i}" aria-pressed="${i === 0}">${y}</button>`).join("")}</div><p class="dot-description">Cada círculo ≈ 1 ponto percentual.</p>${source("ifop")}</div><div class="steps">
+  )}</div><div class="toggle-row" aria-label="Ano da pesquisa">${[1952, 1966, 2006, D.franceRecent.year].map((y, i) => `<button data-history="${i}" aria-pressed="${i === 0}">${y}</button>`).join("")}</div><p class="dot-description">Cada círculo ≈ 1 ponto percentual.</p><div id="history-source">${source("ifop")}</div></div><div class="steps">
   <article data-step="0" class="active"><div class="step-date">1952 · antes do Concílio</div><h3>27 de cada 100.</h3><p>Franceses que declaravam ir à missa todos os domingos.</p></article>
   <article data-step="1"><div class="step-date">1966 · após o Concílio</div><h3>20 de cada 100.</h3><p>20% declaravam ir à missa todos os domingos.</p></article>
-  <article data-step="2"><div class="step-date">2006 · quatro décadas depois</div><h3>4,5 de cada 100.</h3><p>Queda de 22,5 pontos percentuais desde 1952.</p></article></div></div>
+  <article data-step="2"><div class="step-date">2006 · quatro décadas depois</div><h3>4,5 de cada 100.</h3><p>Queda de 22,5 pontos percentuais desde 1952.</p></article>
+  <article data-step="3"><div class="step-date">${D.franceRecent.year} · pesquisa recente</div><h3>${fmt(D.franceRecent.value, 1)} de cada 100.</h3><p>Adultos que declaram ir à missa todos os domingos ou mais.</p><p class="history-note">18 anos ou mais · categoria e método distintos da série histórica.</p>${source(D.franceRecent.source)}</article></div></div>
   ${table(
-    ["Ano", "Missa todos os domingos"],
-    D.historical.franceWeekly.map(([y, v]) => [y, fmt(v, 1) + "%"]),
+    ["Ano", "%", "Frequência", "População", "Fonte"],
+    [...D.historical.franceWeekly.map(([y, v]) => [y, fmt(v, 1) + "%", "Todos os domingos", "Franceses pesquisados", D.sources.ifop.label]),
+      [D.franceRecent.year, fmt(D.franceRecent.value, 1) + "%", D.franceRecent.frequency, "Franceses de 18 anos ou mais", D.sources[D.franceRecent.source].label]],
   )}`,
   );
   html += section(
@@ -379,15 +381,20 @@ function render() {
   initProgress();
 }
 function initHistory() {
-  const years = [1952, 1966, 2006],
-    values = [27, 20, 4.5];
+  const years = [1952, 1966, 2006, D.franceRecent.year],
+    values = [27, 20, 4.5, D.franceRecent.value];
   const update = (n) => {
     const v = values[n];
+    const recent = n === 3;
+    document.querySelectorAll("[data-step]").forEach((e, i) => e.classList.toggle("active", i === n));
+    $("#history-unit").textContent = recent ? D.franceRecent.unit : "% dos franceses pesquisados";
+    $("#history-source").innerHTML = source(recent ? D.franceRecent.source : "ifop");
+    $("#history-legend").innerHTML = legend([{ name: recent ? "Todos os domingos ou mais" : "Missa aos domingos", color: colors[0] }, { name: "Demais respostas", color: "#d4d5ca" }]);
     $("#history-value").textContent = fmt(v, 1) + "%";
     $("#history-year").textContent = years[n];
     $("#history-dots").setAttribute(
       "aria-label",
-      `${fmt(v, 1)}% em ${years[n]}`,
+      `${fmt(v, 1)}% em ${years[n]} · ${recent ? D.franceRecent.unit : "franceses pesquisados"} · ${recent ? D.franceRecent.frequency : "todos os domingos"}`,
     );
     document.querySelectorAll("#history-dots .dot").forEach((e, i) => {
       e.className = "dot" + (i < Math.floor(v) ? " cat" : "");
@@ -417,7 +424,6 @@ function initHistory() {
     });
     if (current !== n) {
       current = n;
-      steps.forEach((e, i) => e.classList.toggle("active", i === n));
       update(n);
     }
     queued = false;
