@@ -117,7 +117,7 @@ function figure(title, subtitle, body, key, note = "") {
   return `<figure><h3 class="chart-title">${title}</h3><p class="unit">${subtitle}</p>${body}${source(key)}</figure>`;
 }
 function section(id, title, intro, body, cls = "") {
-  return `<section class="section ${cls}" id="${id}"><div class="section-head"><h2>${title}</h2><p class="intro">${intro}</p></div>${body}</section>`;
+  return `<section class="section ${cls}" id="${id}">${title ? `<div class="section-head"><h2>${title}</h2><p class="intro">${intro}</p></div>` : ""}${body}</section>`;
 }
 function pairs(
   rows,
@@ -233,10 +233,9 @@ function render() {
   });
   let html = section(
     "panorama",
-    "Antes e depois do Vaticano II.",
-    "Prática religiosa, vocações e sacramentos ao longo das décadas.",
+    "",
+    "",
     `
-  <div class="council-timeline"><span>Antes de 1962</span><a href="${D.sources.council.url}" target="_blank" rel="noopener">Vaticano II · 1962–1965</a><span>Depois de 1965</span></div>
   <div class="scrolly"><div class="sticky-plot"><h3 class="chart-title">França · missa aos domingos</h3><p class="unit">% dos franceses pesquisados</p><div class="dot-readout"><strong id="history-value">27%</strong><span id="history-year">1952</span></div><div class="dotgrid" id="history-dots" role="img" aria-label="27% em 1952">${Array.from({ length: 100 }, () => '<i class="dot" aria-hidden="true"></i>').join("")}</div><div id="history-legend">${legend(
     [
       { name: "Missa aos domingos", color: colors[0] },
