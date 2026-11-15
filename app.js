@@ -239,6 +239,37 @@ function render() {
     data: us[key].map(([y, v]) => [y - 1, v]),
   });
   let html = section(
+    "brasil",
+    "No Brasil, a mudança atravessa gerações.",
+    "Filiação católica desde 1940.",
+    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2000 · % da população · todas as idades", lineChart([{ name: "Católicos", data: D.historical.brazilCatholic }], { percent: true, max: 100 }), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong></div><div class="historical-pair"><span>2000 · 35 anos após o Concílio</span><strong>73,9%</strong></div>${source("fgv")}<div class="recent-reading"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>56,7%</strong>${source("ibge")}</div></div></div>`,
+  );
+  html += section(
+    "brasil-recente",
+    "O retrato brasileiro em dois censos.",
+    "2010–2022 · pessoas de 10 anos ou mais",
+    `<div class="two-up">${figure(
+      "Filiação religiosa",
+      "% da população de 10 anos ou mais",
+      pairs(
+        D.brazil.groups.map((g) => [g.label, ...g.values]),
+        ["2010", "2022"],
+      ),
+      "ibge",
+    )}${figure("Católicos em números absolutos", "Milhões de pessoas de 10 anos ou mais", lineChart([{ name: "Católicos", data: D.brazil.years.map((y, i) => [y, D.brazil.catholicsMillions[i] * 1e6]) }], { max: 120000000 }), "ibge")}</div><div class="two-up">${figure("Católicos por idade", "2022 · % em cada faixa etária selecionada", horizontal(D.brazil.ages, { unit: "%" }), "ibge")}${figure("Católicos por estado", "2022 · % das pessoas de 10 anos ou mais · estados selecionados", horizontal(D.brazil.states, { unit: "%" }), "ibge")}</div>`,
+  );
+  html += section(
+    "america-latina",
+    "A mudança também aparece na América Latina.",
+    "2013–2014 e 2024 · adultos de 18 anos ou mais",
+    figure(
+      "Identificação católica em seis países",
+      "% dos adultos pesquisados em cada país",
+      pairs(D.latam.map((r) => [r.country, ...r.catholic])),
+      "pewla",
+    ),
+  );
+  html += section(
     "panorama",
     "",
     "",
@@ -281,12 +312,6 @@ function render() {
     "Sacramentos desde os anos 1960.",
     "EUA · celebrações anuais · 1964–2024",
     `<div class="two-up">${figure("Batismos de bebês", "Celebrações por ano", lineChart([usSacrament("Baptisms of infants in previous year", "Batismos")]), "cara")}${figure("Casamentos católicos", "Celebrações por ano", lineChart([usSacrament("Marriages in previous year", "Casamentos")]), "cara")}</div><div class="two-up" style="margin-top:55px">${figure("Batismos de adultos", "Celebrações por ano", lineChart([usSacrament("Baptisms of adults in previous year", "Batismos de adultos")]), "cara")}${figure("Batismos e casamentos na mesma escala", "Índice · 1964 = 100", lineChart([usSacrament("Baptisms of infants in previous year", "Batismos de bebês"), usSacrament("Marriages in previous year", "Casamentos")], { index: true, max: 160 }), "cara")}</div>`,
-  );
-  html += section(
-    "brasil",
-    "No Brasil, a mudança atravessa gerações.",
-    "Filiação católica desde 1940.",
-    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2000 · % da população · todas as idades", lineChart([{ name: "Católicos", data: D.historical.brazilCatholic }], { percent: true, max: 100 }), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong></div><div class="historical-pair"><span>2000 · 35 anos após o Concílio</span><strong>73,9%</strong></div>${source("fgv")}<div class="recent-reading"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>56,7%</strong>${source("ibge")}</div></div></div>`,
   );
   html += section(
     "franca",

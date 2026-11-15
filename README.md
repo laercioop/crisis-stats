@@ -2,7 +2,7 @@
 
 Website estático, publicado em https://laercioop.github.io/crisis-stats/.
 
-10 seções com foco na comparação histórica em torno do Vaticano II (1962–1965), uma sequência de leitura guiada por rolagem, tabelas acessíveis e um explorador de 34 indicadores. França desde 1952, Alemanha desde 1950 e Brasil desde 1940; referências dos EUA desde o período conciliar e mundiais desde 1970. HTML, CSS e JavaScript sem dependências de execução, fontes locais, sem rastreamento.
+12 seções com foco na comparação histórica em torno do Vaticano II (1962–1965), uma sequência de leitura guiada por rolagem, tabelas acessíveis e um explorador de 34 indicadores. Brasil abre a leitura com a série histórica, os censos de 2010 e 2022, recortes por idade e estados selecionados, seguido de comparação de filiação em seis países latino-americanos. França desde 1952, Alemanha desde 1950 e Brasil desde 1940; referências dos EUA desde o período conciliar e mundiais desde 1970. HTML, CSS e JavaScript sem dependências de execução, fontes locais, sem rastreamento.
 
 ## Desenvolvimento
 
