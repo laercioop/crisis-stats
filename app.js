@@ -131,7 +131,7 @@ function figure(title, subtitle, body, key, note = "") {
   return `<figure><h3 class="chart-title">${title}</h3><p class="unit">${subtitle}</p>${body}${source(key)}</figure>`;
 }
 function section(id, title, intro, body, cls = "") {
-  return `<section class="section ${cls}" id="${id}">${title ? `<div class="section-head"><h2>${title}</h2><p class="intro">${intro}</p></div>` : ""}${body}</section>`;
+  return `<section class="section ${cls}" id="${id}">${title ? `<div class="section-head"><h2>${title}</h2>${intro ? `<p class="intro">${intro}</p>` : ""}</div>` : ""}${body}</section>`;
 }
 function pairs(
   rows,
@@ -255,17 +255,20 @@ function render() {
   );
   html += section(
     "brasil-recente",
-    "O retrato brasileiro em dois censos.",
-    "2010–2022 · pessoas de 10 anos ou mais",
-    `<div class="two-up">${figure(
-      "Filiação religiosa",
-      "% da população de 10 anos ou mais",
-      pairs(
-        D.brazil.groups.map((g) => [g.label, ...g.values]),
-        ["2010", "2022"],
-      ),
-      "ibge",
-    )}${figure("Católicos em números absolutos", "Milhões de pessoas de 10 anos ou mais", lineChart([{ name: "Católicos", data: D.brazil.years.map((y, i) => [y, D.brazil.catholicsMillions[i] * 1e6]) }], { max: 120000000 }), "ibge")}</div><div class="two-up">${figure("Católicos por idade", "2022 · % em cada faixa etária selecionada", horizontal(D.brazil.ages, { unit: "%" }), "ibge")}${figure("Católicos por estado", "2022 · % das pessoas de 10 anos ou mais · estados selecionados", horizontal(D.brazil.states, { unit: "%" }), "ibge")}</div>`,
+    "O Brasil católico sofre.",
+    "",
+    `${figure(
+      "Filiação religiosa nos censos",
+      "1872–2022 · % da população · até 2010: todas as idades; 2022: 10 anos ou mais",
+      lineChart(D.brazil.religionHistory, {
+        percent: true,
+        max: 100,
+        height: 300,
+        unit: "% da população; até 2010: todas as idades; 2022: 10 anos ou mais",
+        description: "Proporção de católicos, evangélicos e pessoas sem religião nos censos brasileiros",
+      }),
+      "ibgeHistory",
+    )}<div class="two-up">${figure("Católicos por idade", "2022 · % em cada faixa etária selecionada", horizontal(D.brazil.ages, { unit: "%" }), "ibge")}${figure("Católicos por estado", "2022 · % das pessoas de 10 anos ou mais · estados selecionados", horizontal(D.brazil.states, { unit: "%" }), "ibge")}</div>`,
   );
   html += section(
     "america-latina",

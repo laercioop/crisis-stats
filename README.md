@@ -2,7 +2,7 @@
 
 Website estático, publicado em https://laercioop.github.io/crisis-stats/.
 
-12 seções com foco na comparação histórica em torno do Vaticano II (1962–1965), uma sequência de leitura guiada por rolagem, tabelas acessíveis e um explorador de 34 indicadores. Brasil abre a leitura com a série histórica, os censos de 2010 e 2022, recortes por idade e estados selecionados, seguido de comparação de filiação em seis países latino-americanos. França desde 1952, Alemanha desde 1950 e Brasil desde 1940; referências dos EUA desde o período conciliar e mundiais desde 1970. HTML, CSS e JavaScript sem dependências de execução, fontes locais, sem rastreamento.
+12 seções com foco na comparação histórica em torno do Vaticano II (1962–1965), uma sequência de leitura guiada por rolagem, tabelas acessíveis e um explorador de 34 indicadores. Brasil abre a leitura com a série histórica, a evolução de católicos, evangélicos e pessoas sem religião desde os primeiros censos, recortes por idade e estados selecionados, seguido de comparação de filiação em seis países latino-americanos. França desde 1952, Alemanha desde 1950 e Brasil desde 1940; referências dos EUA desde o período conciliar e mundiais desde 1970. HTML, CSS e JavaScript sem dependências de execução, fontes locais, sem rastreamento.
 
 ## Desenvolvimento
 
@@ -30,4 +30,4 @@ node --check app.js
 
 As datas dos sacramentos dos EUA são deslocadas em um ano: a coluna do diretório registra celebrações do ano anterior. Valores mundiais e autodeclarações censitárias não usam a mesma definição de católico. As notas completas ficam junto às fontes no site.
 
-O período conciliar aparece como faixa cronológica nos gráficos que o abrangem. A comparação é descritiva: não isola causas. O ano inicial de cada série é explícito. Notas metodológicas completas ficam em `data/editorial.json`, preservando a leitura visual da página. O gráfico histórico brasileiro une a série FGV/IBGE de 1940–2000 ao Censo 2010 (64,6%, todas as idades) e ao Censo 2022 (56,7%, 10 anos ou mais), com a mudança de universo explícita. A comparação recente mantém 65,1% em 2010 e 56,7% em 2022, ambos para 10 anos ou mais.
+O período conciliar aparece como faixa cronológica nos gráficos que o abrangem. A comparação é descritiva: não isola causas. O ano inicial de cada série é explícito. Notas metodológicas completas ficam em `data/editorial.json`, preservando a leitura visual da página. O gráfico histórico brasileiro une a série FGV/IBGE de 1940–2000 ao Censo 2010 (64,6%, todas as idades) e ao Censo 2022 (56,7%, 10 anos ou mais), com a mudança de universo explícita. O gráfico de filiação religiosa apresenta católicos desde 1872, evangélicos desde 1890 e pessoas sem religião desde 1940, até 2022. Usa todas as idades até 2010 e pessoas de 10 anos ou mais em 2022, com a diferença de universo explícita. Categorias ausentes não são preenchidas com zero. A tabela acessível e a exportação CSV incluem a série.

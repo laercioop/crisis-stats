@@ -34,3 +34,7 @@ with open('data/estatisticas.csv','w',encoding='utf-8-sig',newline='') as f:
 
  for key,series in d['historical'].items():
   for y,v in series:w.writerow(['Brasil' if key=='brazilCatholic' else 'França',key,y,str(v).replace('.',','),'% da população indicada',('IBGE · Censo 2010' if y==2010 else 'FGV / IBGE') if key=='brazilCatholic' else 'IFOP (2010)'])
+
+ for series in d['brazil']['religionHistory']:
+  for y,v in series['data']:
+   w.writerow(['Brasil',series['name']+' — série histórica censitária',y,str(v).replace('.',','),'% de pessoas de 10 anos ou mais' if y==2022 else '% da população de todas as idades','IBGE · Censos 1872–2022'])
