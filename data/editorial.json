@@ -1,0 +1,188 @@
+{
+  "retrieved": "2026-11-15",
+  "sources": {
+    "ibge": {
+      "label": "IBGE (2025)",
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/43593-censo-2022-catolicos-seguem-em-queda-evangelicos-e-sem-religiao-crescem-no-pais",
+      "note": "Censo 2022, resultados preliminares divulgados em junho de 2025. População de 10 anos ou mais. Comparação de 2010 recomposta na divulgação: 65,1% de católicos; não confundir com os 64,6% de todas as idades da divulgação original de 2010."
+    },
+    "cara": {
+      "label": "CARA / Georgetown",
+      "url": "https://cara.georgetown.edu/faqs/",
+      "note": "Planilha Frequently Requested Church Statistics, consultada em 15/11/2026. Séries mundiais até 2023 e dos EUA com coluna 2025 no arquivo consultado (o texto da página ainda informa 2024). Dados administrativos e estimativas de pesquisas, conforme cada indicador. Nos EUA, sacramentos na coluna de um ano correspondem ao ano anterior; aqui os anos dos sacramentos foram corrigidos. O arquivo original e a extração estão disponíveis para download."
+    },
+    "vatican": {
+      "label": "Fides / Vaticano (2026)",
+      "url": "https://www.vaticannews.va/en/church/news/2026-10/fides-agency-2026-annual-church-statistics.html",
+      "note": "Dossiê Fides 2026, com dados de 2024. População católica em 30 de junho; pessoal e seminaristas em 31 de dezembro. Variações em relação a 2023. Católicos são batizados registrados, não uma medida de prática ou autodeclaração censitária."
+    },
+    "pewla": {
+      "label": "Pew Research (2026)",
+      "url": "https://www.pewresearch.org/religion/2026/01/21/catholicism-has-declined-in-latin-america-over-the-past-decade/",
+      "note": "Pesquisas presenciais com 6.234 adultos de 18 anos ou mais em seis países, entre janeiro e abril de 2024; comparação com 2013–2014. Publicação em 2026. Estimativas sujeitas a margens de erro, que variam por país e subgrupo. Não equivalem ao Censo do IBGE: anos, idades e métodos distintos. Nos gráficos de prática, México sem estimativa protestante por amostra insuficiente."
+    },
+    "dbk": {
+      "label": "DBK (2025)",
+      "url": "https://www.dbk.de/fileadmin/redaktion/Zahlen%20und%20Fakten/Kirchliche%20Statistik/Katholiken%20und%20Gottesdienstteilnehmer/2024-Tab-Katholiken-Gottesdienstteilnehmer_1950-2024.pdf",
+      "note": "Série oficial 1950–2024: participantes dos serviços religiosos por 100 católicos registrados. Contagem eclesial, diferente de frequência autodeclarada. A partir de 1990, inclui os novos estados alemães; a base territorial muda. 2020–2021 afetados pela pandemia."
+    },
+    "pewus": {
+      "label": "Pew Research (2025)",
+      "url": "https://www.pewresearch.org/religion/2025/02/26/religious-switching/",
+      "note": "Religious Landscape Study 2023–2024, adultos nos EUA. A razão 8,4 compara pessoas criadas católicas que mudaram de identidade com pessoas criadas fora do catolicismo que hoje são católicas; não é fluxo anual. Criados católicos que permanecem: 57%; 43% já não se identificam assim."
+    },
+    "eucharist": {
+      "label": "Pew Research (2019)",
+      "url": "https://www.pewresearch.org/short-reads/2019/08/05/transubstantiation-eucharist-u-s-catholics/",
+      "note": "Católicos autodeclarados nos EUA, pesquisa de 2019. Crença declarada na transformação do pão e vinho versus interpretação simbólica. 31% no conjunto e 63% entre os que vão à missa ao menos semanalmente. A formulação da pergunta influencia os resultados: não representa uma série temporal nem mede todo o conhecimento doutrinal."
+    },
+    "cef": {
+      "label": "CEF (2026)",
+      "url": "https://eglise.catholique.fr/approfondir-sa-foi/la-celebration-de-la-foi/les-sacrements/le-bapteme/baptemes-adultes/",
+      "note": "Inquérito do catecumenato francês: adultos anunciados para o batismo na Páscoa, 4.124 em 2016 e 13.234 em 2026. Previsão da pesquisa publicada antes da Páscoa, não contagem final de todos os batismos do ano. Não inclui batismos infantis."
+    },
+    "moral": {
+      "label": "Pew Research (2025)",
+      "url": "https://www.pewresearch.org/religion/2025/04/30/most-us-catholics-say-they-want-the-church-to-be-more-inclusive/",
+      "note": "Pesquisa com 1.787 adultos católicos nos EUA, de 3 a 9 de fevereiro de 2025. Apoio a que a Igreja permita cada prática. A pergunta usa birth control sem distinguir métodos naturais; o Pew ressalta essa limitação de formulação. O celibato é disciplina, não dogma, e há sacerdotes casados em certas circunstâncias. Todos os católicos inclui o subgrupo de frequência semanal."
+    }
+  },
+  "brazil": {
+    "years": [2010, 2022],
+    "groups": [
+      {
+        "label": "Católicos",
+        "values": [65.1, 56.7]
+      },
+      {
+        "label": "Evangélicos",
+        "values": [21.6, 26.9]
+      },
+      {
+        "label": "Sem religião",
+        "values": [7.9, 9.3]
+      },
+      {
+        "label": "Outros / sem declaração",
+        "values": [5.4, 7.1]
+      }
+    ],
+    "catholicsMillions": [105.4, 100.2],
+    "ages": [
+      ["10–14 anos", 52],
+      ["80 anos ou mais", 72]
+    ],
+    "states": [
+      ["Piauí", 77.4],
+      ["Rio de Janeiro", 38.9],
+      ["Acre", 38.9],
+      ["Roraima", 37.9]
+    ]
+  },
+  "latam": [
+    {
+      "country": "Brasil",
+      "catholic": [61, 46],
+      "none": 15,
+      "weeklyCatholic": 36,
+      "weeklyProtestant": 69,
+      "god": 98,
+      "important": 79
+    },
+    {
+      "country": "Argentina",
+      "catholic": [71, 58],
+      "none": 24,
+      "weeklyCatholic": 12,
+      "weeklyProtestant": 63,
+      "god": 90,
+      "important": 37
+    },
+    {
+      "country": "Chile",
+      "catholic": [64, 46],
+      "none": 33,
+      "weeklyCatholic": 8,
+      "weeklyProtestant": 43,
+      "god": 89,
+      "important": 40
+    },
+    {
+      "country": "Colômbia",
+      "catholic": [79, 60],
+      "none": 23,
+      "weeklyCatholic": 40,
+      "weeklyProtestant": 68,
+      "god": 97,
+      "important": 57
+    },
+    {
+      "country": "México",
+      "catholic": [81, 67],
+      "none": 20,
+      "weeklyCatholic": 41,
+      "weeklyProtestant": null,
+      "god": 94,
+      "important": 50
+    },
+    {
+      "country": "Peru",
+      "catholic": [76, 67],
+      "none": 12,
+      "weeklyCatholic": 27,
+      "weeklyProtestant": 57,
+      "god": 97,
+      "important": 67
+    }
+  ],
+  "germany": [
+    [1950, 50.4],
+    [1960, 46.1],
+    [1965, 45.1],
+    [1970, 37.4],
+    [1980, 29.1],
+    [1990, 21.9],
+    [2000, 16.5],
+    [2010, 12.6],
+    [2019, 9.1],
+    [2020, 5.9],
+    [2021, 4.3],
+    [2022, 5.7],
+    [2023, 6.2],
+    [2024, 6.6]
+  ],
+  "world2024": {
+    "catholics": 1422000000,
+    "priests": 407421,
+    "sisters": 580131,
+    "seminarians": 103604,
+    "seminarians2023": 106495,
+    "perPriest": 3491,
+    "continents": [
+      ["Américas", 678.87, 199],
+      ["África", 288.31, 1676],
+      ["Europa", 287.24, -2483],
+      ["Ásia", 156.17, 1065],
+      ["Oceania", 11.56, -32]
+    ]
+  },
+  "franceAdults": [
+    [2016, 4124],
+    [2026, 13234]
+  ],
+  "opinions": [
+    ["Contracepção", 84, 72],
+    ["Fertilização in vitro", 83, 71],
+    ["Mulheres sacerdotes", 59, 41],
+    ["Casamento de padres", 63, 49]
+  ],
+  "eucharist": [
+    ["Todos os católicos", 31],
+    ["Missa ao menos semanal", 63]
+  ],
+  "switchingUS": {
+    "retainedPercent": 57,
+    "leftPercent": 43,
+    "exitsPerEntry": 8.4
+  }
+}

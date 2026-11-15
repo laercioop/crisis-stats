@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Estatísticas da Crise na Igreja</title>
+    <meta
+      name="description"
+      content="Filiação, prática religiosa, vocações e crenças: estatísticas da Igreja Católica no Brasil e no mundo, em gráficos interativos."
+    />
+    <meta name="theme-color" content="#f5f3ed" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Ir para os gráficos</a>
+    <header>
+      <a href="#inicio" class="wordmark" aria-label="Voltar ao início"
+        >Estatísticas da Crise na Igreja</a
+      >
+      <nav aria-label="Temas">
+        <a href="#brasil">Brasil</a><a href="#mundo">Mundo</a
+        ><a href="#vocacoes">Vocações</a><a href="#pratica">Prática</a
+        ><a href="#crencas">Crenças</a><a href="#explorar">Explorar</a>
+      </nav>
+      <div class="read-progress" aria-hidden="true"></div>
+    </header>
+    <main id="conteudo">
+      <div class="opening" id="inicio">
+        <h1>Estatísticas da<br />Crise na Igreja</h1>
+        <a class="start-link" href="#brasil"
+          >Brasil, mundo, vocações e fé <span aria-hidden="true">↓</span></a
+        >
+      </div>
+      <div id="loading" role="status">Carregando os dados…</div>
+      <div id="content"></div>
+      <noscript
+        ><p class="nojs">
+          Ative JavaScript para explorar os gráficos. Os dados também estão
+          disponíveis em <a href="data/editorial.json">JSON</a> e na
+          <a href="data/sources/CARAFrequentlyRequested.xlsx"
+            >planilha do CARA</a
+          >.
+        </p></noscript
+      >
+    </main>
+    <footer>
+      <a href="#inicio">Voltar ao início ↑</a>
+      <div>
+        <a href="data/estatisticas.csv" download>Baixar dados · CSV</a
+        ><a href="#fontes">Fontes e notas</a>
+      </div>
+    </footer>
+    <div id="tooltip" class="tooltip" role="status" hidden></div>
+  </body>
+</html>
