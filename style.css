@@ -126,7 +126,7 @@ main {
   margin: auto;
 }
 .opening {
-  padding: 75px 7vw 56px;
+  padding: 40px 7vw 32px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -156,7 +156,7 @@ main {
   padding: 30px 7vw;
 }
 .section {
-  padding: 90px 7vw;
+  padding: 48px 7vw;
   border-top: 1px solid var(--line);
   scroll-margin-top: 0;
 }
@@ -164,7 +164,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  margin-bottom: 45px;
+  margin-bottom: 28px;
   align-items: start;
 }
 h2,
@@ -330,7 +330,7 @@ figure {
   padding-top: 5px;
 }
 .steps article {
-  min-height: 65vh;
+  min-height: clamp(240px, 36vh, 360px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -697,11 +697,11 @@ footer > div {
     white-space: nowrap;
   }
   .opening {
-    padding-top: 50px;
+    padding-top: 32px;
   }
   .section {
-    padding-top: 65px;
-    padding-bottom: 65px;
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
   .section-head {
     gap: 35px;
@@ -735,7 +735,7 @@ footer > div {
     padding-bottom: 10px;
   }
   .opening {
-    padding: 40px 6vw 35px;
+    padding: 28px 6vw 24px;
     display: block;
   }
   .opening h1 {
@@ -753,7 +753,7 @@ footer > div {
     font-size: 20px;
   }
   .section {
-    padding: 50px 6vw;
+    padding: 32px 6vw;
   }
   .section-head {
     display: block;
@@ -803,7 +803,7 @@ footer > div {
     font-size: 10px;
   }
   .steps article {
-    min-height: 58vh;
+    min-height: 30vh;
     padding: 35px 0;
     max-width: none;
   }
@@ -999,7 +999,7 @@ footer > div {
     margin-top: 5px;
   }
   .steps article {
-    min-height: 55vh;
+    min-height: 28vh;
   }
   .pair-bars {
     min-width: 0;
@@ -1126,7 +1126,7 @@ footer > div {
   font-weight: 400;
 }
 .two-up {
-  row-gap: 50px;
+  row-gap: 32px;
 }
 #explorar {
   padding-top: 55px;
