@@ -2,7 +2,7 @@
 
 Website estático, publicado em https://laercioop.github.io/crisis-stats/.
 
-16 seções com gráficos, uma sequência de leitura guiada por rolagem, comparações de países, tabelas acessíveis e um explorador de 30 indicadores. HTML, CSS e JavaScript sem dependências de execução, fontes locais, sem rastreamento.
+10 seções com foco na comparação histórica em torno do Vaticano II (1962–1965), uma sequência de leitura guiada por rolagem, tabelas acessíveis e um explorador de 34 indicadores. França desde 1952, Alemanha desde 1950 e Brasil desde 1940; referências dos EUA desde o período conciliar e mundiais desde 1970. HTML, CSS e JavaScript sem dependências de execução, fontes locais, sem rastreamento.
 
 ## Desenvolvimento
 
@@ -29,3 +29,5 @@ node --check app.js
 ```
 
 As datas dos sacramentos dos EUA são deslocadas em um ano: a coluna do diretório registra celebrações do ano anterior. Valores mundiais e autodeclarações censitárias não usam a mesma definição de católico. As notas completas ficam junto às fontes no site.
+
+O período conciliar aparece como faixa cronológica nos gráficos que o abrangem. A comparação é descritiva: não isola causas. O ano inicial de cada série é explícito. Notas metodológicas completas ficam em `data/editorial.json`, preservando a leitura visual da página. A série brasileira FGV/IBGE (todas as idades) e o recorte IBGE 2022 (10 anos ou mais) são apresentados separadamente.

@@ -65,6 +65,12 @@ function lineChart(
             ? fmt(n / 1000, 1) + " mil"
             : fmt(n, 1);
   let svg = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="${id}-title ${id}-desc"><title id="${id}-title">${esc(description || series.map((s) => s.name).join(", "))}</title><desc id="${id}-desc">${esc(unit)}. De ${xmin} a ${xmax}. Valores completos na tabela abaixo.</desc>`;
+  if (xmin <= 1965 && xmax >= 1962) {
+    const from = Math.max(xmin, 1962),
+      to = Math.min(xmax, 1965),
+      marker = X(from);
+    svg += `<rect class="council-band" x="${marker}" y="${p.t}" width="${Math.max(2, X(to) - marker)}" height="${h - p.t - p.b}"/><line class="council-boundary" x1="${X(to)}" x2="${X(to)}" y1="${p.t}" y2="${h - p.b}"/><text class="council-label" x="${marker + 5}" y="14">${xmin < 1962 ? "Vaticano II · 1962–1965" : "1965 · fim do Concílio"}</text>`;
+  }
   for (let i = 0; i <= 4; i++) {
     let n = (ymax * i) / 4;
     svg += `<line class="grid" x1="${p.l}" y1="${Y(n)}" x2="${w - p.r}" y2="${Y(n)}"/><text x="${p.l - 10}" y="${Y(n) + 4}" text-anchor="end">${index ? fmt(n) : label(n)}</text>`;
@@ -108,7 +114,7 @@ function lineChart(
   )}</div>`;
 }
 function figure(title, subtitle, body, key, note = "") {
-  return `<figure><h3 class="chart-title">${title}</h3><p class="unit">${subtitle}</p>${body}${source(key)}${note ? `<p class="note">${note}</p>` : ""}</figure>`;
+  return `<figure><h3 class="chart-title">${title}</h3><p class="unit">${subtitle}</p>${body}${source(key)}</figure>`;
 }
 function section(id, title, intro, body, cls = "") {
   return `<section class="section ${cls}" id="${id}"><div class="section-head"><h2>${title}</h2><p class="intro">${intro}</p></div>${body}</section>`;
@@ -159,297 +165,217 @@ function horizontal(
     rows.map((r) => [r[0], fmt(r[1], 2)]),
   )}</div>`;
 }
+function historicalSummary() {
+  const rows = [
+    [
+      "Alemanha · participação nas celebrações",
+      "1960 · antes",
+      46.1,
+      "2024",
+      6.6,
+      "%",
+      "dbk",
+    ],
+    [
+      "França · missa aos domingos",
+      "1952 · antes",
+      27,
+      "2006",
+      4.5,
+      "%",
+      "ifop",
+    ],
+    [
+      "EUA · sacerdotes",
+      "1965 · final do Concílio",
+      59426,
+      "2025",
+      33462,
+      "",
+      "cara",
+    ],
+    [
+      "EUA · religiosas",
+      "1965 · final do Concílio",
+      178740,
+      "2025",
+      33135,
+      "",
+      "cara",
+    ],
+    [
+      "EUA · batismos de bebês",
+      "1964 · durante",
+      1237000,
+      "2024",
+      471717,
+      "",
+      "cara",
+    ],
+    [
+      "EUA · casamentos católicos",
+      "1964 · durante",
+      347179,
+      "2024",
+      107271,
+      "",
+      "cara",
+    ],
+  ];
+  return `<div class="macro-table-wrap"><table class="macro-table"><thead><tr><th scope="col">Indicador</th><th scope="col">Referência histórica</th><th scope="col">Décadas depois</th><th scope="col">Variação relativa</th></tr></thead><tbody>${rows.map(([label, year, a, end, b, u, key]) => `<tr><th scope="row">${label}<a class="table-source" href="${D.sources[key].url}" target="_blank" rel="noopener">Fonte: ${D.sources[key].label}</a></th><td><span>${year}</span><strong>${fmt(a, u ? 1 : 0)}${u}</strong></td><td><span>${end}</span><strong>${fmt(b, u ? 1 : 0)}${u}</strong></td><td class="macro-change">${fmt((b / a - 1) * 100, 1)}%</td></tr>`).join("")}</tbody></table></div>`;
+}
 function render() {
   const world = C.world,
     us = C.us;
+  const usSacrament = (key, name) => ({
+    name,
+    data: us[key].map(([y, v]) => [y - 1, v]),
+  });
   let html = section(
-    "brasil",
-    "No Brasil, a maioria católica encolheu.",
-    "Em 12 anos, a mudança aparece tanto na proporção quanto no número de pessoas.",
+    "panorama",
+    "Antes e depois do Vaticano II.",
+    "Prática religiosa, vocações e sacramentos ao longo das décadas.",
     `
- <div class="scrolly"><div class="sticky-plot"><h3 class="chart-title">A cada 100 brasileiros</h3><p class="unit">População de 10 anos ou mais · Brasil</p><div class="dot-readout"><strong id="brazil-value">65,1%</strong><span id="brazil-year">2010</span></div><div class="dotgrid" id="brazil-dots" role="img" aria-label="65,1% católicos em 2010">${Array.from({ length: 100 }, () => '<i class="dot" aria-hidden="true"></i>').join("")}</div><div class="legend" id="brazil-legend"></div><div class="toggle-row" aria-label="Ano do censo"><button data-brazil="0" aria-pressed="true">2010</button><button data-brazil="1" aria-pressed="false">2022</button></div><p class="dot-description">Cada círculo ≈ 1% da população. Os valores exatos estão nas tabelas.</p>${source("ibge")}</div>
- <div class="steps"><article data-step="0" class="active"><div class="step-date">2010</div><h3>65 de cada 100<br>eram católicos.</h3><p>105,4 milhões de pessoas com 10 anos ou mais.</p></article><article data-step="1"><div class="step-date">2022</div><h3>Agora, são 57<br>de cada 100.</h3><p>A proporção caiu de 65,1% para 56,7%: <strong>−8,4 pontos percentuais.</strong></p></article><article data-step="2"><div class="step-date">2010 → 2022</div><h3>Também caiu<br>o total de católicos.</h3><p>De 105,4 para 100,2 milhões: <strong>−5,2 milhões.</strong> Evangélicos e pessoas sem religião ganharam participação.</p></article></div></div>
- ${table(
-   ["Grupo", "2010", "2022"],
-   D.brazil.groups.map((g) => [
-     g.label,
-     fmt(g.values[0], 1) + "%",
-     fmt(g.values[1], 1) + "%",
-   ]),
- )}<p class="note">Resultados preliminares do Censo 2022, divulgados em 2025. Outros / sem declaração é o complemento dos três grupos destacados.</p>`,
+  <div class="council-timeline"><span>Antes de 1962</span><a href="${D.sources.council.url}" target="_blank" rel="noopener">Vaticano II · 1962–1965</a><span>Depois de 1965</span></div>
+  <div class="scrolly"><div class="sticky-plot"><h3 class="chart-title">França · missa aos domingos</h3><p class="unit">% dos franceses pesquisados</p><div class="dot-readout"><strong id="history-value">27%</strong><span id="history-year">1952</span></div><div class="dotgrid" id="history-dots" role="img" aria-label="27% em 1952">${Array.from({ length: 100 }, () => '<i class="dot" aria-hidden="true"></i>').join("")}</div><div id="history-legend">${legend(
+    [
+      { name: "Missa aos domingos", color: colors[0] },
+      { name: "Demais respostas", color: "#d4d5ca" },
+    ],
+  )}</div><div class="toggle-row" aria-label="Ano da pesquisa">${[1952, 1966, 2006].map((y, i) => `<button data-history="${i}" aria-pressed="${i === 0}">${y}</button>`).join("")}</div><p class="dot-description">Cada círculo ≈ 1 ponto percentual.</p>${source("ifop")}</div><div class="steps">
+  <article data-step="0" class="active"><div class="step-date">1952 · antes do Concílio</div><h3>27 de cada 100.</h3><p>Franceses que declaravam ir à missa todos os domingos.</p></article>
+  <article data-step="1"><div class="step-date">1966 · após o Concílio</div><h3>20 de cada 100.</h3><p>20% declaravam ir à missa todos os domingos.</p></article>
+  <article data-step="2"><div class="step-date">2006 · quatro décadas depois</div><h3>4,5 de cada 100.</h3><p>Queda de 22,5 pontos percentuais desde 1952.</p></article></div></div>
+  ${table(
+    ["Ano", "Missa todos os domingos"],
+    D.historical.franceWeekly.map(([y, v]) => [y, fmt(v, 1) + "%"]),
+  )}`,
   );
   html += section(
-    "brasil-geracoes",
-    "A proporção muda com a idade e o lugar.",
-    "No Censo, a identificação católica é maior entre os mais velhos. A média nacional também esconde diferenças entre estados.",
-    `<div class="two-up">${figure("Católicos por idade", "Brasil · 2022 · % de cada faixa etária", horizontal(D.brazil.ages, { unit: "%" }), "ibge", "Dois grupos selecionados. Uma comparação entre idades, não o acompanhamento das mesmas pessoas ao longo da vida.")}${figure("Dos maiores aos menores percentuais", "2022 · estados selecionados · pessoas de 10 anos ou mais", horizontal(D.brazil.states, { unit: "%" }), "ibge", "Piauí: maior proporção. Roraima, Rio de Janeiro e Acre: menores proporções.")}</div>`,
+    "comparacao",
+    "A dimensão da mudança.",
+    "Referências anteriores, contemporâneas e posteriores ao Concílio.",
+    historicalSummary(),
   );
   html += section(
-    "america-latina",
-    "A queda atravessa a América Latina.",
-    "Seis países, a mesma direção. A intensidade da mudança varia.",
+    "pratica",
+    "A prática religiosa ao longo das décadas.",
+    "Séries com observações anteriores a 1962.",
+    `<div class="two-up">${figure("Alemanha · participação nas celebrações", "1950–2024 · participantes por 100 católicos registrados", lineChart([{ name: "Participação", data: D.germany }], { percent: true, max: 60 }), "dbk")}${figure("França · missa todos os domingos", "1952–2006 · % dos franceses pesquisados", lineChart([{ name: "Missa dominical", data: D.historical.franceWeekly }], { percent: true, max: 40 }), "ifop")}</div>`,
+    "band",
+  );
+  html += section(
+    "vocacoes",
+    "O clero desde o final do Concílio.",
+    "EUA · 1965–2025",
+    `<div class="two-up">${figure("Sacerdotes", "Número de sacerdotes", lineChart([lineSeries("us", "Total priests", "Sacerdotes")]), "cara")}${figure("Religiosas", "Mulheres em institutos religiosos", lineChart([lineSeries("us", "Religious sisters", "Religiosas")]), "cara")}</div><div class="two-up" style="margin-top:55px">${figure("Duas trajetórias, a mesma base", "Índice · 1965 = 100", lineChart([lineSeries("us", "Total priests", "Sacerdotes"), lineSeries("us", "Religious sisters", "Religiosas")], { index: true, max: 120 }), "cara")}${figure("Paróquias sem pároco residente", "% das paróquias", lineChart([{ name: "Sem pároco residente", data: us["Parishes without a resident priest pastor"].map(([y, n]) => [y, (n / us.Parishes.find((v) => v[0] === y)[1]) * 100]) }], { percent: true, max: 30 }), "cara")}</div>`,
+  );
+  html += section(
+    "sacramentos",
+    "Sacramentos desde os anos 1960.",
+    "EUA · celebrações anuais · 1964–2024",
+    `<div class="two-up">${figure("Batismos de bebês", "Celebrações por ano", lineChart([usSacrament("Baptisms of infants in previous year", "Batismos")]), "cara")}${figure("Casamentos católicos", "Celebrações por ano", lineChart([usSacrament("Marriages in previous year", "Casamentos")]), "cara")}</div><div class="two-up" style="margin-top:55px">${figure("Batismos de adultos", "Celebrações por ano", lineChart([usSacrament("Baptisms of adults in previous year", "Batismos de adultos")]), "cara")}${figure("Batismos e casamentos na mesma escala", "Índice · 1964 = 100", lineChart([usSacrament("Baptisms of infants in previous year", "Batismos de bebês"), usSacrament("Marriages in previous year", "Casamentos")], { index: true, max: 160 }), "cara")}</div>`,
+  );
+  html += section(
+    "brasil",
+    "No Brasil, a mudança atravessa gerações.",
+    "Filiação católica desde 1940.",
+    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2000 · % da população · todas as idades", lineChart([{ name: "Católicos", data: D.historical.brazilCatholic }], { percent: true, max: 100 }), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong></div><div class="historical-pair"><span>2000 · 35 anos após o Concílio</span><strong>73,9%</strong></div>${source("fgv")}<div class="recent-reading"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>56,7%</strong>${source("ibge")}</div></div></div>`,
+  );
+  html += section(
+    "franca",
+    "Na França, filiação e prática recuaram.",
+    "1952–2006 · % dos franceses pesquisados",
     figure(
-      "Católicos entre os adultos",
-      "% de pessoas com 18 anos ou mais",
-      pairs(D.latam.map((r) => [r.country, ...r.catholic])),
-      "pewla",
-      "Pesquisa de 2024, publicada em 2026. O Brasil desta pesquisa não é diretamente comparável ao Censo: idade, ano e método são diferentes.",
+      "Identificação católica e missa dominical",
+      "Duas medidas na mesma população",
+      lineChart(
+        [
+          {
+            name: "Católicos",
+            data: D.historical.franceCatholic,
+            color: colors[1],
+          },
+          { name: "Missa dominical", data: D.historical.franceWeekly },
+        ],
+        { percent: true, max: 100 },
+      ),
+      "ifop",
     ),
   );
   html += section(
     "mundo",
-    "No mundo, o total cresceu.",
-    "O número de batizados mais que dobrou desde 1970. A participação na população mundial ficou perto de 18%.",
-    `<div class="two-up">${figure("Católicos registrados", "Mundo · número de batizados", lineChart([{ name: "Católicos", data: [...world["Catholic population"], [2024, 1422000000]], color: colors[1] }], { description: "Crescimento do número de católicos registrados no mundo" }), "cara")}${figure("Participação na população mundial", "Mundo · % da população", lineChart([{ name: "Católicos", data: [...world["Percent of world population"].map(([y, v]) => [y, v * 100]), [2024, 17.8]], color: colors[1] }], { percent: true, max: 100, description: "Participação católica na população mundial" }), "cara")}</div><p class="note">2024: Fides / Vaticano (2026). Anos anteriores: CARA / Anuário Estatístico. Contagem de batizados registrados; não mede frequência à missa.</p>${source("vatican")}`,
-  );
-  html += section(
-    "continentes",
-    "O centro de gravidade está mudando.",
-    "Em 2024, a África reuniu ligeiramente mais católicos que a Europa. O crescimento do clero também foi desigual.",
-    `<div class="two-up">${figure(
-      "Onde estão os católicos",
-      "2024 · milhões de batizados",
-      horizontal(
-        D.world2024.continents.map((r) => [r[0], r[1]]),
-        { unit: "Milhões", color: colors[1] },
-      ),
-      "vatican",
-    )}${figure(
-      "Variação no número de sacerdotes",
-      "2023 → 2024 · aumento ou redução",
-      horizontal(
-        D.world2024.continents.map((r) => [r[0], r[2]]),
-        { signed: true, unit: "Sacerdotes" },
-      ),
-      "vatican",
-    )}</div>`,
-  );
-  html += section(
-    "vocacoes",
-    "Mais fiéis. Quase o mesmo número de padres.",
-    "Desde 1970, a população católica cresceu muito mais que o clero. O contraste fica claro usando a mesma base.",
-    `<div class="two-up">${figure("Dois ritmos de crescimento", "Mundo · índice, 1970 = 100", lineChart([lineSeries("world", "Catholic population", "Católicos", colors[1]), lineSeries("world", "Total priests", "Sacerdotes", colors[0])], { index: true, description: "Católicos e sacerdotes, índice com base 1970 igual a 100" }), "cara")}${figure("Católicos por sacerdote", "Mundo · razão calculada a partir dos totais", lineChart([{ name: "Católicos por padre", data: world["Catholic population"].map(([y, n]) => [y, n / world["Total priests"].find((v) => v[0] === y)[1]]) }], { description: "Número médio de católicos por sacerdote no mundo" }), "cara", "Razão aritmética: não informa a distribuição local nem quantos sacerdotes estão ativos.")}</div><div class="two-up" style="margin-top:55px">${figure("Religiosas no mundo", "Número de mulheres em institutos religiosos", lineChart([{ name: "Religiosas", data: [...world["Religious sisters"], [2024, 580131]] }]), "cara", "2024: Fides / Vaticano (2026).")}${figure("Seminaristas maiores", "Mundo · candidatos ao sacerdócio", pairs([["Mundo", 106495, 103604]], ["2023", "2024"], 120000, "", false), "vatican", "−2.891 seminaristas em um ano (−2,7%). A África foi o único continente com aumento.")}</div>`,
-  );
-  html += section(
-    "estados-unidos",
-    "Nos EUA, a estrutura ficou menor.",
-    "Menos sacerdotes e religiosas. Mais paróquias sem um pároco residente.",
-    `<div class="two-up">${figure("Sacerdotes e religiosas", "EUA · índice, 1965 = 100", lineChart([lineSeries("us", "Total priests", "Sacerdotes"), lineSeries("us", "Religious sisters", "Religiosas")], { index: true, max: 110 }), "cara")}${figure("Paróquias sem pároco residente", "EUA · % das paróquias", lineChart([{ name: "Sem pároco residente", data: us["Parishes without a resident priest pastor"].map(([y, n]) => [y, (n / us.Parishes.find((v) => v[0] === y)[1]) * 100]) }], { percent: true, max: 30 }), "cara", "Não significa paróquias sem missas ou sem atendimento sacerdotal.")}</div><div class="two-up" style="margin-top:55px">${figure("Ordenações sacerdotais", "EUA · número por ano", lineChart([lineSeries("us", "Priestly ordinations", "Ordenações")]), "cara")}${figure("Diáconos permanentes", "EUA · número de diáconos", lineChart([lineSeries("us", "Permanent deacons", "Diáconos", colors[1])]), "cara")}</div>`,
-  );
-  html += section(
-    "pratica",
-    "Identificar-se é uma coisa.<br>Praticar é outra.",
-    "Entre católicos, a frequência às celebrações também mudou. Os métodos de medição diferem entre os países.",
-    `<div class="two-up">${figure("Alemanha: participação nas celebrações", "Participantes por 100 católicos registrados", lineChart([{ name: "Participação", data: D.germany }], { percent: true, max: 60 }), "dbk", "Desde 1990, inclui os novos estados alemães. A pandemia afetou 2020–2021.")}${figure("EUA: missa todas as semanas", "% de católicos · estimativas de pesquisas", lineChart([{ name: "Frequência semanal", data: us["Catholics who attend Mass every week (survey-based estimate)"].map(([y, n]) => [y, n * 100]) }], { percent: true, max: 60 }), "cara", "Estimativas reunidas pelo CARA. A série combina pesquisas; a medição difere da contagem alemã.")}</div>`,
-    "band",
-  );
-  html += section(
-    "pratica-latina",
-    "A prática também varia entre os grupos.",
-    "Na pesquisa de 2024, protestantes declararam maior frequência semanal que católicos nos cinco países com estimativas para ambos.",
-    figure(
-      "Participação semanal em serviços religiosos",
-      "% dentro de cada grupo religioso · adultos",
-      pairs(
-        D.latam
-          .filter((r) => r.weeklyProtestant !== null)
-          .map((r) => [r.country, r.weeklyCatholic, r.weeklyProtestant]),
-        ["Católicos", "Protestantes"],
-        100,
-        "%",
-        false,
-      ),
-      "pewla",
-      "México omitido: amostra protestante insuficiente. As perguntas se referem aos espaços religiosos de cada grupo; frequência autodeclarada.",
-    ),
-  );
-  const sacrament = (area, key, name) => ({
-    name,
-    data: C[area][key].map(([y, n]) => [area === "us" ? y - 1 : y, n]),
-  });
-  html += section(
-    "sacramentos",
-    "Menos batismos infantis e casamentos.",
-    "A redução aparece nos totais mundiais e nos EUA. Estes são números de celebrações, não taxas por habitante.",
-    `<div class="two-up">${figure("Batismos de crianças até 7 anos", "Mundo · celebrações por ano", lineChart([sacrament("world", "Baptisms of infants to age 7", "Batismos")]), "cara")}${figure("Casamentos entre dois católicos", "Mundo · celebrações por ano", lineChart([sacrament("world", "Marriages between two Catholics", "Casamentos")]), "cara")}</div><div class="two-up" style="margin-top:55px">${figure("Batismos de bebês", "EUA · celebrações por ano", lineChart([sacrament("us", "Baptisms of infants in previous year", "Batismos")]), "cara")}${figure("Casamentos católicos", "EUA · celebrações por ano", lineChart([sacrament("us", "Marriages in previous year", "Casamentos")]), "cara")}</div><p class="note">Nos EUA, os anos foram deslocados para o ano efetivo da celebração: a coluna 2025 da fonte relata sacramentos de 2024. Natalidade, estrutura etária e tamanho da população também influenciam os totais.</p>`,
-  );
-  html += section(
-    "mudancas",
-    "Nos EUA, saem mais do que entram.",
-    "A comparação é entre a religião da infância e a identidade na vida adulta. Não é uma contagem de saídas por ano.",
-    `<div class="ratio"><div><div class="quote-num">8,4 : 1</div><p class="ratio-label">pessoas criadas católicas que deixaram essa identidade para cada pessoa que se tornou católica</p><div class="ratio-track"></div><div class="ratio-track gain"></div>${source("pewus")}</div><div><h3>De cada 100 criados católicos…</h3><div class="waffle-small" role="img" aria-label="57 permanecem católicos; 43 não se identificam mais como católicos">${Array.from({ length: 100 }, (_, i) => `<i class="${i < 57 ? "filled" : ""}"></i>`).join("")}</div>${legend(
-      [
-        { name: "57 permanecem", color: colors[0] },
-        { name: "43 deixaram", color: "#d9ddcf" },
-      ],
-    )}${table(
-      ["Medida", "Resultado"],
-      [
-        ["Permanecem católicos", "57%"],
-        ["Já não se identificam como católicos", "43%"],
-        ["Razão entre saídas e entradas", "8,4 para 1"],
-      ],
-    )}</div></div><p class="note">Adultos nos EUA · pesquisa 2023–2024, publicada em 2025. As mudanças refletem trajetórias de vida, não necessariamente ritos formais.</p>`,
-  );
-  html += section(
-    "crencas",
-    "A identidade não resume a crença.",
-    "Na América Latina, a crença em Deus continua ampla. Nos EUA, a resposta sobre a Eucaristia muda conforme a prática.",
-    `<div class="two-up">${figure(
-      "Crença em Deus e importância da religião",
-      "% de todos os adultos · 2024",
-      pairs(
-        D.latam.map((r) => [r.country, r.god, r.important]),
-        ["Creem em Deus", "Religião muito importante"],
-        100,
-        "%",
-        false,
-      ),
-      "pewla",
-      "Inclui todas as identidades religiosas, não apenas católicos.",
-    )}${figure(
-      "Crença na transformação do pão e do vinho",
-      "% de católicos nos EUA · 2019",
-      horizontal(
-        [
-          ["Todos", 31],
-          ["Missa semanal", 63],
-        ],
-        { unit: "%", color: colors[0] },
-      ),
-      "eucharist",
-      "No conjunto, 69% escolheram a interpretação simbólica. Uma pesquisa de 2019, não uma medição atual nem uma série temporal. A formulação da pergunta importa.",
-    )}</div>`,
-  );
-  html += section(
-    "opinioes",
-    "A prática não elimina as divergências.",
-    "Nos EUA, o apoio a mudanças é menor entre os católicos que vão à missa semanalmente. Em alguns temas, continua majoritário.",
-    figure(
-      "A Igreja deveria permitir…",
-      "% de católicos nos EUA · 2025",
-      pairs(
-        D.opinions,
-        ["Todos os católicos", "Missa ao menos semanal"],
-        100,
-        "%",
-        false,
-      ),
-      "moral",
-      "Apoio declarado, não comportamento pessoal. A pergunta sobre contracepção não distingue métodos naturais. O celibato é uma disciplina, com exceções, não um dogma.",
-    ),
-  );
-  html += section(
-    "franca",
-    "Há movimentos na direção contrária.",
-    "Na França, a procura pelo batismo de adultos aumentou. Essa série mede um grupo específico, não todos os batismos.",
-    `<div class="two-up"><div><h3>Mais de três vezes<br>em dez anos.</h3><div class="statline"><strong>+221%</strong><span>adultos anunciados para o batismo na Páscoa</span></div><p class="note">Inquérito francês do catecumenato. Os números são os anunciados antes da Páscoa, não uma apuração final.</p></div>${figure(
-      "Adultos anunciados para o batismo",
-      "França · Páscoa de 2016 e de 2026",
-      horizontal(
-        [
-          ["2016", 4124],
-          ["2026", 13234],
-        ],
-        { unit: "Adultos", color: colors[1] },
-      ),
-      "cef",
-    )}</div>`,
+    "A trajetória mundial desde 1970.",
+    "Católicos registrados, sacerdotes e vida religiosa.",
+    `<div class="two-up">${figure("Católicos e sacerdotes", "Índice · 1970 = 100", lineChart([lineSeries("world", "Catholic population", "Católicos", colors[1]), lineSeries("world", "Total priests", "Sacerdotes")], { index: true }), "cara")}${figure("Religiosas no mundo", "1970–2024 · número de religiosas", lineChart([{ name: "Religiosas", data: [...world["Religious sisters"], [2024, 580131]] }]), "cara")}${figure("Batismos de crianças até 7 anos", "1970–2023 · celebrações anuais", lineChart([lineSeries("world", "Baptisms of infants to age 7", "Batismos")]), "cara")}${figure("Casamentos entre dois católicos", "1970–2023 · celebrações anuais", lineChart([lineSeries("world", "Marriages between two Catholics", "Casamentos")]), "cara")}</div>${source("vatican")}`,
   );
   html += section(
     "explorar",
     "Explore as séries.",
-    "Escolha um indicador. Compare os valores ou a mudança proporcional desde o primeiro ano disponível.",
+    "Décadas de dados em valores absolutos ou em índice.",
     `<div class="explorer-controls"><label>Indicador<select id="indicator"></select></label><label>Escala<select id="scale"><option value="values">Valores absolutos</option><option value="index">Índice · primeiro ano = 100</option></select></label><button id="download-series">Baixar série</button></div><div id="explorer-chart"></div><p class="chart-status" id="explorer-status" aria-live="polite"></p>`,
   );
   html += section(
     "fontes",
-    "Fontes e notas.",
-    "O ano junto à fonte é o da publicação. Cada gráfico informa o período dos dados.",
+    "Fontes.",
+    "",
     `<div class="sources">${Object.entries(D.sources)
       .map(
         ([k, s]) =>
-          `<div id="fonte-${k}"><h3><a href="${s.url}" target="_blank" rel="noopener">${s.label}</a></h3><p>${s.note}</p></div>`,
+          `<div id="fonte-${k}"><h3><a href="${s.url}" target="_blank" rel="noopener">${s.label}</a></h3></div>`,
       )
       .join(
         "",
-      )}</div><div class="explain"><strong>Como ler:</strong> de 65,1% para 56,7% são −8,4 pontos percentuais, ou −12,9% em termos relativos. Totais, proporções e frequência religiosa respondem a perguntas diferentes. Séries temporais, por si só, não demonstram causas.</div><div class="download-links"><a href="data/estatisticas.csv" download>Todos os dados · CSV</a><a href="data/editorial.json" download>Recortes e fontes · JSON</a><a href="data/cara.json" download>Séries históricas · JSON</a><a href="data/sources/CARAFrequentlyRequested.xlsx" download>Planilha original · CARA</a></div>`,
+      )}</div><div class="download-links"><a href="data/estatisticas.csv" download>Todos os dados · CSV</a><a href="data/editorial.json" download>Recortes e fontes · JSON</a><a href="data/cara.json" download>Séries históricas · JSON</a><a href="data/sources/CARAFrequentlyRequested.xlsx" download>Planilha original · CARA</a></div>`,
   );
   $("#content").innerHTML = html;
   $("#loading").remove();
-  initBrazil();
+  initHistory();
   initExplorer();
   initTooltips();
   initProgress();
 }
-function initBrazil() {
-  let stage = 0;
-  function update(which, full = false) {
-    stage = which;
-    let groups = D.brazil.groups,
-      year = D.brazil.years[which],
-      cat = groups[0].values[which];
-    $("#brazil-value").textContent = fmt(cat, 1) + "%";
-    $("#brazil-year").textContent = year;
-    $("#brazil-dots").setAttribute(
+function initHistory() {
+  const years = [1952, 1966, 2006],
+    values = [27, 20, 4.5];
+  const update = (n) => {
+    const v = values[n];
+    $("#history-value").textContent = fmt(v, 1) + "%";
+    $("#history-year").textContent = years[n];
+    $("#history-dots").setAttribute(
       "aria-label",
-      `${fmt(cat, 1)}% católicos em ${year}`,
+      `${fmt(v, 1)}% em ${years[n]}`,
     );
-    let bounds = [
-      Math.round(cat),
-      Math.round(cat + groups[1].values[which]),
-      Math.round(cat + groups[1].values[which] + groups[2].values[which]),
-    ];
-    document.querySelectorAll(".dot").forEach((dot, i) => {
-      dot.className =
-        "dot " +
-        (i < bounds[0]
-          ? "cat"
-          : full
-            ? i < bounds[1]
-              ? "ev"
-              : i < bounds[2]
-                ? "none"
-                : "other"
-            : "");
+    document.querySelectorAll("#history-dots .dot").forEach((e, i) => {
+      e.className = "dot" + (i < Math.floor(v) ? " cat" : "");
+      e.style.background =
+        i === Math.floor(v) && v % 1
+          ? `linear-gradient(90deg, ${colors[0]} ${(v % 1) * 100}%, #d4d5ca ${(v % 1) * 100}%)`
+          : "";
     });
-    $("#brazil-legend").innerHTML = legend(
-      full
-        ? [
-            { name: "Católicos", color: colors[0] },
-            { name: "Evangélicos", color: colors[1] },
-            { name: "Sem religião", color: colors[2] },
-            { name: "Outros", color: "#b8bcaf" },
-          ]
-        : [
-            { name: "Católicos", color: colors[0] },
-            { name: "Demais", color: "#d4d5ca" },
-          ],
-    );
     document
-      .querySelectorAll("[data-brazil]")
+      .querySelectorAll("[data-history]")
       .forEach((b) =>
-        b.setAttribute("aria-pressed", String(+b.dataset.brazil === which)),
+        b.setAttribute("aria-pressed", String(+b.dataset.history === n)),
       );
-  }
+  };
   document
-    .querySelectorAll("[data-brazil]")
+    .querySelectorAll("[data-history]")
     .forEach((b) =>
-      b.addEventListener("click", () => update(+b.dataset.brazil, true)),
+      b.addEventListener("click", () => update(+b.dataset.history)),
     );
-  update(0);
   let current = -1,
     queued = false;
   const sync = () => {
-    const steps = [...document.querySelectorAll("[data-step]")];
     let n = 0;
+    const steps = [...document.querySelectorAll("[data-step]")];
     steps.forEach((e, i) => {
       if (e.getBoundingClientRect().top < innerHeight * 0.68) n = i;
     });
-    if (n !== current) {
+    if (current !== n) {
       current = n;
       steps.forEach((e, i) => e.classList.toggle("active", i === n));
-      update(n === 0 ? 0 : 1, n === 2);
+      update(n);
     }
     queued = false;
   };
@@ -465,7 +391,36 @@ function initBrazil() {
   );
   sync();
 }
+
 const indicators = [
+  [
+    "historical",
+    "franceWeekly",
+    "França · missa dominical desde 1952",
+    "% dos franceses pesquisados",
+    "ifop",
+  ],
+  [
+    "historical",
+    "franceCatholic",
+    "França · católicos desde 1952",
+    "% dos franceses pesquisados",
+    "ifop",
+  ],
+  [
+    "historical",
+    "germany",
+    "Alemanha · participação desde 1950",
+    "Participantes por 100 católicos",
+    "dbk",
+  ],
+  [
+    "historical",
+    "brazilCatholic",
+    "Brasil · católicos desde 1940",
+    "% da população, todas as idades",
+    "fgv",
+  ],
   [
     "world",
     "Catholic population",
@@ -635,7 +590,13 @@ function initExplorer() {
     .join("");
   function selected() {
     let [area, key, name, unit, sourceKey] = indicators[+$("#indicator").value],
-      data = C[area][key].map(([y, n]) => [
+      data = (
+        area === "historical"
+          ? key === "germany"
+            ? D.germany
+            : D.historical[key]
+          : C[area][key]
+      ).map(([y, n]) => [
         area === "us" && key.includes("previous year") ? y - 1 : y,
         n,
       ]);
@@ -647,7 +608,11 @@ function initExplorer() {
     $("#explorer-chart").innerHTML = figure(
       s.name,
       index ? "Índice · primeiro ano = 100" : s.unit,
-      lineChart([{ name: s.unit, data: s.data }], { index, height: 310 }),
+      lineChart([{ name: s.unit, data: s.data }], {
+        index,
+        percent: s.unit.startsWith("%") && !index,
+        height: 250,
+      }),
       s.sourceKey,
     );
     const first = s.data[0],

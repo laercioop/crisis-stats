@@ -1014,3 +1014,184 @@ footer > div {
 .steps article:not(.active) .step-date {
   color: var(--muted);
 }
+.council-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-block: 1px solid var(--line);
+  padding: 20px 0;
+  margin-bottom: 45px;
+  font-size: 13px;
+}
+.council-timeline a {
+  color: var(--wine);
+  font-weight: 600;
+  text-align: center;
+}
+.council-band {
+  fill: #925d20;
+  opacity: 0.12;
+}
+.council-boundary {
+  stroke: var(--ochre);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+.chart svg .council-label {
+  font-size: 11px;
+  fill: var(--ochre);
+}
+.band .council-band {
+  fill: #d9b679;
+  opacity: 0.14;
+}
+.band .council-boundary {
+  stroke: #d9b679;
+}
+.band .chart svg .council-label {
+  fill: #d9b679;
+}
+.macro-table-wrap {
+  overflow-x: auto;
+}
+.macro-table {
+  font-size: 14px;
+}
+.macro-table th,
+.macro-table td {
+  white-space: normal;
+  padding: 22px 18px;
+  vertical-align: middle;
+}
+.macro-table thead {
+  font-size: 12px;
+  color: var(--muted);
+}
+.macro-table th:first-child {
+  width: 34%;
+  padding-left: 0;
+}
+.macro-table td span {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 5px;
+}
+.macro-table td strong {
+  font-size: 25px;
+  font-family: var(--serif);
+  font-weight: 400;
+}
+.table-source {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 7px;
+  text-decoration: none;
+}
+.macro-change {
+  color: var(--wine);
+  font-size: 23px;
+  font-family: var(--serif);
+}
+.historical-reading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.historical-pair {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+.historical-pair span,
+.recent-reading > span {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+.historical-pair strong {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--wine);
+}
+.recent-reading {
+  margin-top: 24px;
+}
+.recent-reading > strong {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+}
+.two-up {
+  row-gap: 50px;
+}
+#explorar {
+  padding-top: 55px;
+  padding-bottom: 55px;
+}
+#explorer-chart {
+  max-width: 1000px;
+}
+#explorer-chart .chart svg {
+  height: clamp(210px, 32vh, 300px);
+  width: 100%;
+}
+#explorer-chart .legend {
+  margin-bottom: 8px;
+}
+#explorer-chart details {
+  margin-top: 5px;
+}
+#fontes .section-head {
+  grid-template-columns: 1fr;
+}
+.band .point {
+  fill: #e7a1ab;
+}
+@media (max-width: 650px) {
+  .sticky-plot > #history-legend {
+    grid-column: 2;
+    grid-row: 4;
+  }
+  .sticky-plot .toggle-row {
+    gap: 4px;
+  }
+  .sticky-plot button {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+  .council-timeline {
+    font-size: 10px;
+    gap: 10px;
+    padding: 15px 0;
+  }
+  .macro-table {
+    min-width: 580px;
+  }
+  .macro-table th,
+  .macro-table td {
+    padding: 16px 12px;
+  }
+  .macro-table td strong {
+    font-size: 21px;
+  }
+  .macro-change {
+    font-size: 20px;
+  }
+  .macro-table-wrap {
+    margin-right: -6vw;
+    padding-right: 6vw;
+  }
+  .chart svg .council-label {
+    font-size: 15px;
+  }
+  #explorer-chart .chart svg {
+    height: 230px;
+  }
+  .historical-pair strong {
+    font-size: 40px;
+  }
+}

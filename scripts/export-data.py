@@ -31,3 +31,6 @@ with open('data/estatisticas.csv','w',encoding='utf-8-sig',newline='') as f:
  for key,v in d['world2024'].items():
   if key!='continents':w.writerow(['Mundo',key,2023 if key=='seminarians2023' else 2024,v,'Pessoas ou razão, conforme indicador','Fides / Vaticano (2026)'])
  for year,n in zip(d['brazil']['years'],d['brazil']['catholicsMillions']):w.writerow(['Brasil','Católicos',year,str(n).replace('.',','),'Milhões de pessoas de 10 anos ou mais','IBGE (2025)'])
+
+ for key,series in d['historical'].items():
+  for y,v in series:w.writerow(['Brasil' if key=='brazilCatholic' else 'França',key,y,str(v).replace('.',','),'% da população indicada','FGV / IBGE' if key=='brazilCatholic' else 'IFOP (2010)'])

@@ -45,6 +45,21 @@
       "label": "Pew Research (2025)",
       "url": "https://www.pewresearch.org/religion/2025/04/30/most-us-catholics-say-they-want-the-church-to-be-more-inclusive/",
       "note": "Pesquisa com 1.787 adultos católicos nos EUA, de 3 a 9 de fevereiro de 2025. Apoio a que a Igreja permita cada prática. A pergunta usa birth control sem distinguir métodos naturais; o Pew ressalta essa limitação de formulação. O celibato é disciplina, não dogma, e há sacerdotes casados em certas circunstâncias. Todos os católicos inclui o subgrupo de frequência semanal."
+    },
+    "ifop": {
+      "label": "IFOP (2010)",
+      "url": "https://www.ifop.com/wp-content/uploads/2018/03/238-1-document_file.pdf",
+      "note": "Le catholicisme en France en 2010, agosto de 2010, p. 7. Série 1952–2006 de autodeclaração católica e assistência à missa todos os domingos; percentuais no conjunto dos franceses pesquisados, não apenas entre católicos. Compilação histórica de pesquisas; os pontos não são medições anuais. Documento indexado com quadro completo consultado em 15/11/2026."
+    },
+    "fgv": {
+      "label": "FGV / IBGE",
+      "url": "https://www.cps.fgv.br/simulador/site_religioes2/rel2_apresenta%C3%A7%C3%A3oLGASele%C3%A7aoFimTUDO_print.pdf",
+      "note": "CPS/FGV, Evolução das Religiões: Brasil, participação de católicos na população, 1872 a 2003. Gráfico de processamento dos Censos do IBGE: série 1940–2000 transcrita, valores da própria FGV. Os percentuais podem diferir ligeiramente de outras tabulações censitárias. Universo de todas as idades. O recorte de 2022 no site refere-se a pessoas de 10 anos ou mais e é apresentado separadamente."
+    },
+    "council": {
+      "label": "Santa Sé (1965)",
+      "url": "https://www.vatican.va/content/paul-vi/en/apost_letters/documents/hf_p-vi_apl_19651208_in-spiritu-sancto.html",
+      "note": "Decreto de encerramento In Spiritu Sancto: Vaticano II, aberto em 11/10/1962 e encerrado em 08/12/1965. Nos gráficos, a faixa 1962–1965 é um marco cronológico. A comparação descritiva não identifica causas. Séries iniciadas em 1965 são referências do final do Concílio; em 1970, referências posteriores."
     }
   },
   "brazil": {
@@ -184,5 +199,34 @@
     "retainedPercent": 57,
     "leftPercent": 43,
     "exitsPerEntry": 8.4
+  },
+  "historical": {
+    "franceWeekly": [
+      [1952, 27],
+      [1966, 20],
+      [1972, 20],
+      [1978, 14],
+      [1987, 6],
+      [2001, 5],
+      [2006, 4.5]
+    ],
+    "franceCatholic": [
+      [1952, 81],
+      [1966, 80],
+      [1972, 87],
+      [1978, 76],
+      [1987, 75],
+      [2001, 69],
+      [2006, 65]
+    ],
+    "brazilCatholic": [
+      [1940, 95.01],
+      [1950, 93.48],
+      [1960, 93.07],
+      [1970, 91.77],
+      [1980, 88.96],
+      [1991, 83.34],
+      [2000, 73.89]
+    ]
   }
 }
