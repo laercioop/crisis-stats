@@ -1334,8 +1334,7 @@ footer > div {
   padding: 0;
   justify-content: start;
 }
-#panorama .steps .source,
-#panorama .history-note {
+#panorama .steps .source {
   font-size: 12px;
   color: var(--muted);
   margin-top: 8px;

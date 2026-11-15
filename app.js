@@ -295,7 +295,7 @@ function render() {
   <article data-step="0" class="active"><div class="step-date">1952 · antes do Concílio</div><h3>27 de cada 100.</h3><p>Franceses que declaravam ir à missa todos os domingos.</p></article>
   <article data-step="1"><div class="step-date">1966 · após o Concílio</div><h3>20 de cada 100.</h3><p>20% declaravam ir à missa todos os domingos.</p></article>
   <article data-step="2"><div class="step-date">2006 · quatro décadas depois</div><h3>4,5 de cada 100.</h3><p>Queda de 22,5 pontos percentuais desde 1952.</p></article>
-  <article data-step="3"><div class="step-date">${D.franceRecent.year} · pesquisa recente</div><h3>${fmt(D.franceRecent.value, 1)} de cada 100.</h3><p>Adultos que declaram ir à missa todos os domingos ou mais.</p><p class="history-note">18 anos ou mais · categoria e método distintos da série histórica.</p>${source(D.franceRecent.source)}</article></div></div>
+  <article data-step="3"><div class="step-date">${D.franceRecent.year} · pesquisa recente</div><h3>${fmt(D.franceRecent.value, 1)} de cada 100.</h3><p>Adultos que declaram ir à missa todos os domingos ou mais.</p>${source(D.franceRecent.source)}</article></div></div>
   ${table(
     ["Ano", "%", "Frequência", "População", "Fonte"],
     [...D.historical.franceWeekly.map(([y, v]) => [y, fmt(v, 1) + "%", "Todos os domingos", "Franceses pesquisados", D.sources.ifop.label]),

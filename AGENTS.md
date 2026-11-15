@@ -16,7 +16,7 @@ Consulte `PRODUCT.md`, `DESIGN.md` e `README.md` para contexto, direção visual
 
 ## Alterações e validação
 
-Preserve a identidade editorial existente e os textos fora do escopo solicitado. Diferencie percentuais e totais; informe anos, unidades e populações. Mantenha explícitas as diferenças entre universos estatísticos e não infira causalidade das séries históricas.
+Preserve a identidade editorial existente e os textos fora do escopo solicitado. Diferencie percentuais e totais; informe anos, unidades e populações. Informe a população de cada indicador e não infira causalidade das séries históricas. Notas sobre diferenças de método, categoria e comparabilidade devem ficar em `data/editorial.json`; não acrescente ressalvas desse tipo ao bloco visível sem solicitação explícita do usuário.
 
 Para servir localmente: `python -m http.server 4173`.
 
@@ -27,3 +27,5 @@ Ao alterar JavaScript, execute `node --check app.js`. Antes do commit, execute `
 Sempre que concluir uma tarefa que altere arquivos do projeto, faça commit das alterações pertinentes e execute `git push` para o remoto da branch de trabalho, sem pedir nova confirmação. Esta é uma autorização permanente do usuário. Na branch `main`, o push também publica o site automaticamente.
 
 Inclua apenas arquivos da tarefa; preserve alterações e arquivos não rastreados do usuário. Não faça commits vazios quando nada mudou. Não use force push nem descarte trabalho para resolver divergências. Se o push falhar, informe o impedimento e o estado do commit. Na resposta final, informe o resultado do push e o hash do commit.
+
+Após o push, confira a execução do workflow e a versão disponível no site público. Só informe publicação concluída depois de confirmar o deploy; push bem-sucedido sozinho não confirma publicação.
