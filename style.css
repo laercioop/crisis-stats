@@ -126,7 +126,7 @@ main {
   margin: auto;
 }
 .opening {
-  padding: 40px 7vw 32px;
+  padding: 28px 7vw 24px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -156,7 +156,7 @@ main {
   padding: 30px 7vw;
 }
 .section {
-  padding: 48px 7vw;
+  padding: 32px 7vw;
   border-top: 1px solid var(--line);
   scroll-margin-top: 0;
 }
@@ -164,7 +164,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   align-items: start;
 }
 h2,
@@ -296,10 +296,10 @@ figure {
   gap: 55px;
 }
 .two-up + .two-up {
-  margin-top: 65px;
+  margin-top: 32px;
 }
 .plot-block + .plot-block {
-  margin-top: 60px;
+  margin-top: 32px;
 }
 .statline {
   display: flex;
@@ -330,7 +330,7 @@ figure {
   padding-top: 5px;
 }
 .steps article {
-  min-height: clamp(240px, 36vh, 360px);
+  min-height: clamp(180px, 26vh, 260px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -700,8 +700,8 @@ footer > div {
     padding-top: 32px;
   }
   .section {
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
   .section-head {
     gap: 35px;
@@ -817,7 +817,7 @@ footer > div {
     gap: 40px;
   }
   .two-up + .two-up {
-    margin-top: 45px;
+    margin-top: 28px;
   }
   .chart svg text {
     font-size: 13px;
@@ -999,7 +999,7 @@ footer > div {
     margin-top: 5px;
   }
   .steps article {
-    min-height: 28vh;
+    min-height: 22vh;
   }
   .pair-bars {
     min-width: 0;
@@ -1129,8 +1129,8 @@ footer > div {
   row-gap: 32px;
 }
 #explorar {
-  padding-top: 55px;
-  padding-bottom: 55px;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 #explorer-chart {
   max-width: 1000px;
@@ -1298,5 +1298,27 @@ footer > div {
 @media (max-width: 650px) {
   .line-chart svg {
     height: 230px;
+  }
+}
+
+.historical-pair .source {
+  margin: 4px 0 0;
+}
+.census-highlight strong {
+  font-size: 64px;
+}
+.chart svg .point-label {
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+@media (max-width: 650px) {
+  .census-highlight strong {
+    font-size: 52px;
+  }
+  #brasil .legend {
+    gap: 6px 18px;
+    margin-bottom: 12px;
   }
 }

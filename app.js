@@ -35,6 +35,7 @@ function lineChart(
     max,
     description = "",
     height = 300,
+    annotations = [],
   } = {},
 ) {
   const usedColors = new Set();
@@ -100,6 +101,10 @@ function lineChart(
     svg += `<path d="${v.map(([x, y], j) => `${j ? "L" : "M"}${X(x).toFixed(2)},${Y(y).toFixed(2)}`).join(" ")}" fill="none" stroke="${color}" stroke-width="2.6" stroke-linejoin="round"/>`;
     v.forEach(([x, y], j) => {
       let tip = `${s.name} · ${x}: ${index ? fmt(y, 1) + " (índice)" : label(s.data[j][1])}`;
+      if (annotations.includes(x)) {
+        const anchor = x === xmin ? "start" : x === xmax ? "end" : "middle";
+        svg += `<text class="value point-label" x="${X(x)}" y="${Y(y) + (x === 1960 ? 24 : -13)}" text-anchor="${anchor}">${x} · ${label(y)}</text>`;
+      }
       svg += `<circle role="img" class="point" cx="${X(x)}" cy="${Y(y)}" r="3.7" fill="${color}" tabindex="0" data-tip="${esc(tip)}" aria-label="${esc(tip)}"><title>${esc(tip)}</title></circle>`;
     });
   });
@@ -242,7 +247,10 @@ function render() {
     "brasil",
     "No Brasil, a mudança atravessa gerações.",
     "Filiação católica desde 1940.",
-    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2000 · % da população · todas as idades", lineChart([{ name: "Católicos", data: D.historical.brazilCatholic }], { percent: true, max: 100 }), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong></div><div class="historical-pair"><span>2000 · 35 anos após o Concílio</span><strong>73,9%</strong></div>${source("fgv")}<div class="recent-reading"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>56,7%</strong>${source("ibge")}</div></div></div>`,
+    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2022 · % da população", lineChart([
+      { name: "Todas as idades · 1940–2000", data: D.historical.brazilCatholic },
+      { name: "10 anos ou mais · 2010–2022", data: D.brazil.years.map((year, i) => [year, D.brazil.groups[0].values[i]]) },
+    ], { percent: true, max: 100, annotations: [1940, 1960, 2022] }) + source("ibge"), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong>${source("fgv")}</div><div class="historical-pair census-highlight"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>${fmt(D.brazil.groups[0].values.at(-1), 1)}%</strong>${source("ibge")}</div></div></div>`,
   );
   html += section(
     "brasil-recente",
