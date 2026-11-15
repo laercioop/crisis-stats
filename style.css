@@ -1195,3 +1195,108 @@ footer > div {
     font-size: 40px;
   }
 }
+.comparison-plots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 38px 65px;
+}
+.comparison-plot {
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+.comparison-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+.comparison-top h3 {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 25ch;
+}
+.comparison-drop {
+  font-family: var(--serif);
+  color: var(--wine);
+  font-size: 36px;
+  font-weight: 400;
+  white-space: nowrap;
+  line-height: 1;
+}
+.comparison-bars {
+  display: grid;
+  gap: 15px;
+}
+.comparison-bar-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 88px;
+  align-items: center;
+  gap: 12px;
+}
+.comparison-year {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.comparison-track {
+  height: 20px;
+}
+.comparison-track i {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+}
+.comparison-before {
+  background: var(--green);
+}
+.comparison-after {
+  background: var(--wine);
+}
+.comparison-number {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.comparison-plot .source {
+  font-size: 10px;
+  margin-top: 18px;
+}
+.comparison-plots ~ .source {
+  margin-top: 0;
+}
+@media (max-width: 750px) {
+  .comparison-plots {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .comparison-drop {
+    font-size: 34px;
+  }
+  .comparison-top {
+    margin-bottom: 20px;
+  }
+  .comparison-bar-row {
+    grid-template-columns: 35px minmax(0, 1fr) 82px;
+    gap: 10px;
+  }
+  .comparison-top h3 {
+    font-size: 14px;
+  }
+}
+.line-chart svg {
+  height: clamp(210px, 32vh, 300px);
+  width: 100%;
+}
+.section > figure > .line-chart {
+  max-width: 1000px;
+}
+@media (max-width: 650px) {
+  .line-chart svg {
+    height: 230px;
+  }
+}

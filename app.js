@@ -37,6 +37,13 @@ function lineChart(
     height = 300,
   } = {},
 ) {
+  const usedColors = new Set();
+  series = series.map((s, i) => {
+    let color = s.color || colors[i];
+    if (usedColors.has(color)) color = colors.find((c) => !usedColors.has(c));
+    usedColors.add(color);
+    return { ...s, color };
+  });
   const id = "chart-" + ++chartCount,
     w = 600,
     h = height,
@@ -98,7 +105,7 @@ function lineChart(
   });
   svg += "</svg>";
   const years = [...new Set(all.map((x) => x[0]))].sort((a, b) => a - b);
-  return `<div class="chart">${legend(series)}${svg}${table(
+  return `<div class="chart line-chart">${legend(series)}${svg}${table(
     ["Ano", ...series.map((s) => s.name)],
     years.map((y) => [
       y,
@@ -222,7 +229,7 @@ function historicalSummary() {
       "cara",
     ],
   ];
-  return `<div class="macro-table-wrap"><table class="macro-table"><thead><tr><th scope="col">Indicador</th><th scope="col">Referência histórica</th><th scope="col">Décadas depois</th><th scope="col">Variação relativa</th></tr></thead><tbody>${rows.map(([label, year, a, end, b, u, key]) => `<tr><th scope="row">${label}<a class="table-source" href="${D.sources[key].url}" target="_blank" rel="noopener">Fonte: ${D.sources[key].label}</a></th><td><span>${year}</span><strong>${fmt(a, u ? 1 : 0)}${u}</strong></td><td><span>${end}</span><strong>${fmt(b, u ? 1 : 0)}${u}</strong></td><td class="macro-change">${fmt((b / a - 1) * 100, 1)}%</td></tr>`).join("")}</tbody></table></div>`;
+  return `<div class="comparison-plots">${rows.map(([label, year, a, end, b, u, key]) => `<figure class="comparison-plot"><div class="comparison-top"><h3>${label}</h3><strong class="comparison-drop">${fmt((b / a - 1) * 100, 1)}%</strong></div><div class="comparison-bars" role="img" aria-label="${esc(label)}: ${year}, ${fmt(a, u ? 1 : 0)}${u}; ${end}, ${fmt(b, u ? 1 : 0)}${u}"><div class="comparison-bar-row"><span class="comparison-year">${year.split(" · ")[0]}</span><div class="comparison-track"><i class="comparison-before" style="width:100%"></i></div><span class="comparison-number">${fmt(a, u ? 1 : 0)}${u}</span></div><div class="comparison-bar-row"><span class="comparison-year">${end}</span><div class="comparison-track"><i class="comparison-after" style="width:${(b / a) * 100}%"></i></div><span class="comparison-number">${fmt(b, u ? 1 : 0)}${u}</span></div></div>${source(key)}</figure>`).join("")}</div>`;
 }
 function render() {
   const world = C.world,
@@ -253,7 +260,7 @@ function render() {
   html += section(
     "comparacao",
     "A dimensão da mudança.",
-    "Referências anteriores, contemporâneas e posteriores ao Concílio.",
+    "",
     historicalSummary(),
   );
   html += section(
