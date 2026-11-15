@@ -36,6 +36,7 @@ function lineChart(
     description = "",
     height = 300,
     annotations = [],
+    showLegend = true,
   } = {},
 ) {
   const usedColors = new Set();
@@ -103,14 +104,15 @@ function lineChart(
       let tip = `${s.name} · ${x}: ${index ? fmt(y, 1) + " (índice)" : label(s.data[j][1])}`;
       if (annotations.includes(x)) {
         const anchor = x === xmin ? "start" : x === xmax ? "end" : "middle";
-        svg += `<text class="value point-label" x="${X(x)}" y="${Y(y) + (x === 1960 ? 24 : -13)}" text-anchor="${anchor}">${x} · ${label(y)}</text>`;
+        const labelY = Y(y) + (x === 1960 ? 30 : -36);
+        svg += `<text class="point-label" x="${X(x)}" y="${labelY}" text-anchor="${anchor}"><tspan class="point-year">${x}</tspan><tspan class="value" x="${X(x)}" dy="19">${label(y)}</tspan></text>`;
       }
       svg += `<circle role="img" class="point" cx="${X(x)}" cy="${Y(y)}" r="3.7" fill="${color}" tabindex="0" data-tip="${esc(tip)}" aria-label="${esc(tip)}"><title>${esc(tip)}</title></circle>`;
     });
   });
   svg += "</svg>";
   const years = [...new Set(all.map((x) => x[0]))].sort((a, b) => a - b);
-  return `<div class="chart line-chart">${legend(series)}${svg}${table(
+  return `<div class="chart line-chart">${showLegend ? legend(series) : ""}${svg}${table(
     ["Ano", ...series.map((s) => s.name)],
     years.map((y) => [
       y,
@@ -247,10 +249,9 @@ function render() {
     "brasil",
     "No Brasil, a mudança atravessa gerações.",
     "Filiação católica desde 1940.",
-    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2022 · % da população", lineChart([
-      { name: "Todas as idades · 1940–2000", data: D.historical.brazilCatholic },
-      { name: "10 anos ou mais · 2010–2022", data: D.brazil.years.map((year, i) => [year, D.brazil.groups[0].values[i]]) },
-    ], { percent: true, max: 100, annotations: [1940, 1960, 2022] }) + source("ibge"), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong>${source("fgv")}</div><div class="historical-pair census-highlight"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>${fmt(D.brazil.groups[0].values.at(-1), 1)}%</strong>${source("ibge")}</div></div></div>`,
+    `<div class="two-up">${figure("Católicos na população brasileira", "1940–2022 · % de católicos · até 2010: todas as idades; 2022: 10 anos ou mais", lineChart([
+      { name: "Católicos", data: [...D.historical.brazilCatholic, [2022, D.brazil.groups[0].values.at(-1)]] },
+    ], { percent: true, max: 100, showLegend: false, annotations: [1940, 1960, 2022] }) + source("ibge2010") + source("ibge"), "fgv")}<div class="historical-reading"><div class="historical-pair"><span>1960 · antes do Concílio</span><strong>93,1%</strong>${source("fgv")}</div><div class="historical-pair census-highlight"><span>Censo 2022 · pessoas de 10 anos ou mais</span><strong>${fmt(D.brazil.groups[0].values.at(-1), 1)}%</strong>${source("ibge")}</div></div></div>`,
   );
   html += section(
     "brasil-recente",

@@ -1317,8 +1317,9 @@ footer > div {
   .census-highlight strong {
     font-size: 52px;
   }
-  #brasil .legend {
-    gap: 6px 18px;
-    margin-bottom: 12px;
-  }
+}
+
+.chart svg .point-year {
+  font-size: 11px;
+  fill: var(--muted);
 }

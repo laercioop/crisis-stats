@@ -54,7 +54,12 @@
     "fgv": {
       "label": "FGV / IBGE",
       "url": "https://www.cps.fgv.br/simulador/site_religioes2/rel2_apresenta%C3%A7%C3%A3oLGASele%C3%A7aoFimTUDO_print.pdf",
-      "note": "CPS/FGV, Evolução das Religiões: Brasil, participação de católicos na população, 1872 a 2003. Gráfico de processamento dos Censos do IBGE: série 1940–2000 transcrita, valores da própria FGV. Os percentuais podem diferir ligeiramente de outras tabulações censitárias. Universo de todas as idades. O recorte de 2022 no site refere-se a pessoas de 10 anos ou mais e é apresentado separadamente."
+      "note": "CPS/FGV, Evolução das Religiões: Brasil, participação de católicos na população, 1872 a 2003. Gráfico de processamento dos Censos do IBGE: série 1940–2000 transcrita, valores da própria FGV. Os percentuais podem diferir ligeiramente de outras tabulações censitárias. Universo de todas as idades. O recorte de 2022 no site refere-se a pessoas de 10 anos ou mais e tem seu universo identificado no gráfico. O ponto de 2010 (64,6%, todas as idades) vem diretamente do IBGE, conforme a fonte ibge2010."
+    },
+    "ibge2010": {
+      "label": "IBGE · Censo 2010",
+      "url": "https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/14244-asi-censo-2010-numero-de-catolicos-cai-e-aumenta-o-de-evangelicos-espiritas-e-sem-religiao",
+      "note": "Católicos apostólicos romanos: 64,6% da população de todas as idades em 2010. Complementa a série FGV/IBGE de 1940–2000. No gráfico histórico, o ponto de 2022 (56,7%) refere-se a pessoas de 10 anos ou mais; a ligação visual não elimina a diferença de universo. O recorte comparável de 2010 para 10 anos ou mais é 65,1%, mantido na seção dos dois censos."
     },
     "council": {
       "label": "Santa Sé (1965)",
@@ -226,7 +231,8 @@
       [1970, 91.77],
       [1980, 88.96],
       [1991, 83.34],
-      [2000, 73.89]
+      [2000, 73.89],
+      [2010, 64.6]
     ]
   }
 }
